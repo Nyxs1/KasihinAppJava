@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- PRIMARY -->
+    <color name="primary_100">#283593</color>
+    <color name="primary_80">#535DA9</color>
+    <color name="primary_60">#7E86BE</color>
+    <color name="primary_40">#A9AED4</color>
+
+    <!-- SECONDARY -->
+    <color name="secondary_100">#5C6BC0</color>
+    <color name="secondary_80">#7D89CD</color>
+    <color name="secondary_60">#9DA6D9</color>
+    <color name="secondary_40">#BEC4E6</color>
+
+    <!-- FAILED -->
+    <color name="failed_100">#B71C1C</color>
+    <color name="failed_80">#C54949</color>
+    <color name="failed_60">#D47777</color>
+    <color name="failed_40">#E2A4A4</color>
+
+    <!-- PENDING -->
+    <color name="pending_100">#F9A825</color>
+    <color name="pending_80">#FAB951</color>
+    <color name="pending_60">#FBCB7C</color>
+    <color name="pending_40">#FDDCA8</color>
+
+    <!-- SUCCESS -->
+    <color name="success_100">#388E3C</color>
+    <color name="success_80">#60A563</color>
+    <color name="success_60">#88BB8A</color>
+    <color name="success_40">#AFD2B1</color>
+
+    <!-- BASE -->
+    <color name="base_black">#000000</color>
+    <color name="base_gray_100">#979797</color>
+    <color name="base_gray_90">#A0A0A2</color>
+    <color name="base_gray_80">#A8A8A9</color>
+    <color name="base_white">#FFFFFF</color>
+
+</resources>
