@@ -1,82 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Base App Theme -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:fontFamily">@font/plus_jakarta_sans_regular</item>
-        <item name="android:textColor">@color/colorTextPrimary</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <!-- Heading -->
-    <style name="Heading1">
-        <item name="android:textSize">40sp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:fontFamily">@font/plus_jakarta_sans_regular</item>
-    </style>
-
-    <style name="Heading1_SemiBold" parent="Heading1">
-        <item name="android:fontFamily">@font/plus_jakarta_sans_semi_bold</item>
-    </style>
-
-    <style name="Heading1_Bold" parent="Heading1">
-        <item name="android:fontFamily">@font/plus_jakarta_sans_bold</item>
-    </style>
-
-    <!-- Title 1 (19px ≈ 14sp) -->
-    <style name="Title1">
-        <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">@font/plus_jakarta_sans_regular</item>
-    </style>
-
-    <style name="Title1_SemiBold" parent="Title1">
-        <item name="android:fontFamily">@font/plus_jakarta_sans_semi_bold</item>
-    </style>
-
-    <style name="Title1_Bold" parent="Title1">
-        <item name="android:fontFamily">@font/plus_jakarta_sans_bold</item>
-    </style>
-
-    <!-- Title 2 (16px ≈ 12sp) -->
-    <style name="Title2">
-        <item name="android:textSize">12sp</item>
-        <item name="android:fontFamily">@font/plus_jakarta_sans_regular</item>
-    </style>
-
-    <style name="Title2_SemiBold" parent="Title2">
-        <item name="android:fontFamily">@font/plus_jakarta_sans_semi_bold</item>
-    </style>
-
-    <style name="Title2_Bold" parent="Title2">
-        <item name="android:fontFamily">@font/plus_jakarta_sans_bold</item>
-    </style>
-
-    <!-- Body (13px ≈ 11sp) -->
-    <style name="BodyText">
-        <item name="android:textSize">11sp</item>
-        <item name="android:fontFamily">@font/plus_jakarta_sans_regular</item>
-    </style>
-
-    <style name="BodyText_SemiBold" parent="BodyText">
-        <item name="android:fontFamily">@font/plus_jakarta_sans_semi_bold</item>
-    </style>
-
-    <style name="BodyText_Bold" parent="BodyText">
-        <item name="android:fontFamily">@font/plus_jakarta_sans_bold</item>
-    </style>
-
-    <!-- Caption (11px ≈ 9sp) -->
-    <style name="Caption">
-        <item name="android:textSize">9sp</item>
-        <item name="android:fontFamily">@font/plus_jakarta_sans_regular</item>
-    </style>
-
-    <style name="Caption_SemiBold" parent="Caption">
-        <item name="android:fontFamily">@font/plus_jakarta_sans_semi_bold</item>
-    </style>
-
-    <style name="Caption_Bold" parent="Caption">
-        <item name="android:fontFamily">@font/plus_jakarta_sans_bold</item>
+    <style name="BankLogo">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:contentDescription">Logo Bank</item>
     </style>
 
 </resources>
