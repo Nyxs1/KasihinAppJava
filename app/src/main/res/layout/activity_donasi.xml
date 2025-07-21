@@ -1,0 +1,87 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_back"
+            android:contentDescription="Back"
+            android:clickable="true"
+            android:focusable="true"
+            />
+
+        <ImageView
+            android:id="@+id/ivDonasiProfile"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:id="@+id/tvDonasiNama"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ELZNOW"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nominal:"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/tvPoin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="60"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:background="#DDDDFF"/>
+
+        <!-- Kolom Input -->
+        <EditText
+            android:id="@+id/etNama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Dari"
+            android:layout_marginTop="10dp"
+            android:background="#EEEEEE"/>
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:layout_marginTop="10dp"
+            android:background="#EEEEEE"/>
+
+        <EditText
+            android:id="@+id/etPesan"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="Pesan"
+            android:layout_marginTop="10dp"
+            android:background="#EEEEEE"/>
+
+        <Button
+            android:id="@+id/btnKirimDonasi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Donasi"
+            android:layout_marginTop="20dp"/>
+    </LinearLayout>
+</ScrollView>
