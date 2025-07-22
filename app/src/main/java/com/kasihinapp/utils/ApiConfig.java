@@ -20,7 +20,7 @@ public class ApiConfig {
 
     public static final String GET_USER_PROFILE = BASE_URL + "controllers/user/profile.php";
     public static final String UPDATE_USER_PROFILE = BASE_URL + "controllers/user/update.php";
-
+    public static final String GET_USER_DONATION_HISTORY = "controllers/donation/history_user.php";
     public static final String GET_POIN_HISTORY = BASE_URL + "?endpoint=poin_history";
 }
 

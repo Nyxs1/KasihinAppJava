@@ -47,6 +47,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvUserName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/plus_jakarta_sans_bold"
@@ -55,6 +56,7 @@
                         android:textSize="18sp" />
 
                     <TextView
+                        android:id="@+id/tvUserRole"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Content Creator"
@@ -107,6 +109,7 @@
                             android:gravity="center_vertical">
 
                             <TextView
+                                android:id="@+id/tvPoinBalance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/plus_jakarta_sans_bold"
@@ -186,11 +189,12 @@
                             android:textColor="#2A3C8E" />
                     </RelativeLayout>
 
-                    <!-- Data Donasi Statis (sesuai permintaan) -->
-                    <include layout="@layout/list_item_donasi" />
-                    <include layout="@layout/list_item_donasi_nyxs" />
-                    <include layout="@layout/list_item_donasi_erlangga" />
-
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvRecentDonations"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/list_item_donasi"
+                        tools:itemCount="3"/>
                 </LinearLayout>
 
                 <!-- REVISI 3: Bagian "Views on Youtube" ditambahkan -->

@@ -8,6 +8,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 import com.google.android.gms.auth.api.Auth;
+import com.kasihinapp.model.DonationHistoryResponse;
 import com.kasihinapp.model.DonationResponse;
 import com.kasihinapp.model.ProfileResponse;
 import com.kasihinapp.model.User;
@@ -37,5 +38,10 @@ public interface UserApiService {
             @Field("jumlah") int jumlah,
             @Field("pesan") String pesan
     );
+
+
+
+    @GET(ApiConfig.GET_USER_DONATION_HISTORY)
+    Call<DonationHistoryResponse> getDonationHistory();
 
 }
