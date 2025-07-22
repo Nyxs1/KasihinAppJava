@@ -113,16 +113,19 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/plus_jakarta_sans_bold"
-                                android:text="POIN 10.000"
                                 android:textColor="#212121"
-                                android:textSize="20sp" />
+                                android:textSize="20sp"
+                                tools:text="POIN 10.000" />
 
                             <ImageView
+                                android:id="@+id/ivToggleBalance"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:layout_marginStart="8dp"
-                                android:contentDescription="Tampilkan saldo"
-                                android:src="@drawable/ic_visibility" />
+                                android:contentDescription="Tampilkan/Sembunyikan saldo"
+                                android:src="@drawable/ic_visibility"
+                                android:clickable="true"
+                                android:focusable="true"/>
                         </LinearLayout>
 
                         <!-- REVISI 2: Tata Letak Tombol diperbaiki -->

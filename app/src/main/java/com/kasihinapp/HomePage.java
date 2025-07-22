@@ -2,6 +2,7 @@ package com.kasihinapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,10 +31,16 @@ public class HomePage extends AppCompatActivity {
     private SessionManager sessionManager;
     private UserApiService apiService;
 
+    // Deklarasi View
     private TextView tvUserName, tvUserRole, tvPoinBalance;
+    private ImageView ivToggleBalance; // <-- View baru
     private RecyclerView rvRecentDonations;
+
+    // Variabel untuk data
     private DonationHistoryAdapter donationAdapter;
     private List<DonationHistory> donationList = new ArrayList<>();
+    private User currentUser; // <-- Menyimpan data user
+    private boolean isBalanceVisible = true; // <-- Flag untuk status poin
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +52,7 @@ public class HomePage extends AppCompatActivity {
 
         initViews();
         setupBottomNav();
+        setupListeners(); // <-- Panggil method listener baru
 
         int userId = getUserIdFromToken();
         if (userId != -1) {
@@ -59,9 +67,10 @@ public class HomePage extends AppCompatActivity {
     }
 
     private void initViews() {
-        tvUserName = findViewById(R.id.tvUserName); // Ganti dengan ID yang benar di XML Anda
-        tvUserRole = findViewById(R.id.tvUserRole); // Ganti dengan ID yang benar di XML Anda
-        tvPoinBalance = findViewById(R.id.tvPoinBalance); // Ganti dengan ID yang benar di XML Anda
+        tvUserName = findViewById(R.id.tvUserName);
+        tvUserRole = findViewById(R.id.tvUserRole);
+        tvPoinBalance = findViewById(R.id.tvPoinBalance);
+        ivToggleBalance = findViewById(R.id.ivToggleBalance); // <-- Inisialisasi ImageView mata
 
         rvRecentDonations = findViewById(R.id.rvRecentDonations);
         rvRecentDonations.setLayoutManager(new LinearLayoutManager(this));
@@ -74,10 +83,10 @@ public class HomePage extends AppCompatActivity {
             @Override
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isStatus()) {
-                    User user = response.body().getUser();
-                    tvUserName.setText(user.getNama());
-                    tvUserRole.setText(user.getRole());
-                    tvPoinBalance.setText("POIN " + user.getPoin());
+                    currentUser = response.body().getUser();
+                    tvUserName.setText(currentUser.getNama());
+                    tvUserRole.setText(currentUser.getRole());
+                    updateBalanceView(); // Panggil method baru untuk update tampilan poin
                 }
             }
             @Override
@@ -85,6 +94,34 @@ public class HomePage extends AppCompatActivity {
                 Toast.makeText(HomePage.this, "Gagal memuat profil", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    // ... (fetchDonationHistory, getUserIdFromToken, setupBottomNav tetap sama) ...
+
+    private void setupListeners() {
+        ivToggleBalance.setOnClickListener(v -> {
+            // Balikkan status visibilitas
+            isBalanceVisible = !isBalanceVisible;
+            // Perbarui tampilan
+            updateBalanceView();
+        });
+    }
+
+    /**
+     * Method baru untuk memperbarui tampilan saldo poin
+     */
+    private void updateBalanceView() {
+        if (currentUser == null) return;
+
+        if (isBalanceVisible) {
+            // Jika terlihat, tampilkan jumlah poin asli
+            tvPoinBalance.setText(currentUser.getPoin() + " POINT");
+            ivToggleBalance.setImageResource(R.drawable.ic_visibility);
+        } else {
+            // Jika disembunyikan, tampilkan bintang
+            tvPoinBalance.setText("**** POINT");
+                ivToggleBalance.setImageResource(R.drawable.ic_visibility_off);
+        }
     }
 
     private void fetchDonationHistory() {
