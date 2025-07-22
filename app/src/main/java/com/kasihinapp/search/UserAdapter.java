@@ -9,38 +9,33 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-// --- UBAH IMPORT INI ---
-import com.kasihinapp.model.User; // Ganti dari com.google.firebase...
-// -----------------------
-
+import com.kasihinapp.model.User;
 import com.kasihinapp.R;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
-    private List<User> userList;
-    private List<User> filteredList;
+    private List<User> userList; // Sekarang ini adalah daftar yang sudah di-filter/rekomendasi dari Activity
+    private OnItemClickListener listener; // Deklarasi listener
+
+    public interface OnItemClickListener {
+        void onItemClick(User user);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public UserAdapter(List<User> userList) {
         this.userList = userList;
-        this.filteredList = new ArrayList<>(userList);
     }
 
+    // Metode filter tidak lagi dibutuhkan di adapter karena filtering dilakukan di Activity
+    /*
     public void filter(String keyword) {
-        filteredList.clear();
-        if (keyword.isEmpty()) {
-            filteredList.addAll(userList);
-        } else {
-            for (User user : userList) {
-                if (user.getNama().toLowerCase(Locale.ROOT).contains(keyword.toLowerCase(Locale.ROOT))) {
-                    filteredList.add(user);
-                }
-            }
-        }
-        notifyDataSetChanged();
+        // Logic filtering ini dipindahkan ke SearchActivity
     }
+    */
 
     @Override
     public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -50,23 +45,27 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     @Override
     public void onBindViewHolder(UserViewHolder holder, int position) {
-        final User user = filteredList.get(position);
+        final User user = userList.get(position); // Gunakan userList langsung
 
         holder.name.setText(user.getNama());
         holder.role.setText(user.getRole());
 
+        // Anda bisa menambahkan logika untuk menampilkan gambar profil jika ada URL di objek User
+        // Contoh: Glide.with(holder.itemView.getContext()).load(user.getImageUrl()).into(holder.image);
+        // Untuk saat ini, menggunakan gambar default:
+        holder.image.setImageResource(R.mipmap.ic_launcher); // Menggunakan mipmap karena ic_launcher berada disana
+
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), ProfileActivity.class);
-            // --- PERUBAHAN: Kirim ID pengguna ---
-            intent.putExtra("user_id", user.getId());
-            v.getContext().startActivity(intent);
+            if (listener != null) {
+                listener.onItemClick(user); // Panggil onItemClick saat item diklik
+            }
         });
     }
 
     @Override
     public int getItemCount() {
-        return filteredList.size();
+        return userList.size();
     }
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {

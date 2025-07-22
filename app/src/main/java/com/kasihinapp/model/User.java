@@ -83,4 +83,18 @@ public class User implements Serializable {
                 ", bioUser='" + bioUser + '\'' + // Ditambahkan
                 '}';
     }
+
+    // di dalam class User
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id; // Membandingkan berdasarkan ID
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.valueOf(id).hashCode(); // Menggunakan ID untuk hashCode
+    }
 }

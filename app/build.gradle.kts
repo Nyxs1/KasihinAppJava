@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "com.kasihinapp"
-        minSdk = 26 // DIUBAH: Menaikkan versi minimum ke 26 (Android Oreo)
+        minSdk = 21 // DIUBAH: Menaikkan versi minimum ke 26 (Android Oreo)
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
