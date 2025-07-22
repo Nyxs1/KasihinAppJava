@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/search_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
     android:background="@color/white"
     tools:context=".search.SearchActivity">
 
@@ -13,14 +11,16 @@
         android:id="@+id/etSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:background="@android:drawable/edit_text"
         android:drawableStart="@android:drawable/ic_menu_search"
         android:hint="Mau nyari siapa?"
-        android:padding="10dp"/>
+        android:padding="10dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"/>
-</LinearLayout>
+        android:layout_below="@id/etSearch"
+        android:paddingHorizontal="10dp" />
+</RelativeLayout>

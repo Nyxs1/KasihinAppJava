@@ -27,37 +27,39 @@ import retrofit2.Response;
 public class SearchActivity extends AppCompatActivity {
 
     private UserAdapter adapter;
-    private List<User> userList = new ArrayList<>(); // Inisialisasi list
+    private List<User> userList = new ArrayList<>();
     private EditText etSearch;
     private UserApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // --- PERBAIKAN 1: Gunakan layout yang benar ---
         setContentView(R.layout.activity_search);
 
         etSearch = findViewById(R.id.etSearch);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
-        // Inisialisasi ApiService
         apiService = ApiClient.getClient().create(UserApiService.class);
 
-        // Setup RecyclerView dengan adapter
+        // Setup RecyclerView dan Adapter
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new UserAdapter(userList);
         recyclerView.setAdapter(adapter);
 
-        // Panggil method untuk mengambil data dari API
+        // Ambil data dari API
         fetchRecipients();
 
-        // Setup listener untuk search
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.filter(s.toString());
+                // Pastikan adapter tidak null sebelum memfilter
+                if (adapter != null) {
+                    adapter.filter(s.toString());
+                }
             }
 
             @Override
@@ -72,20 +74,21 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isStatus()) {
-                    // Hapus data lama dan tambahkan data baru
                     userList.clear();
                     userList.addAll(response.body().getUsers());
-                    // Beri tahu adapter bahwa data telah berubah
-                    adapter.notifyDataSetChanged();
+
+                    // --- PERBAIKAN 2: Beri tahu adapter untuk refresh ---
+                    adapter.filter(""); // Memanggil filter untuk me-refresh data di adapter
+
                 } else {
-                    Toast.makeText(SearchActivity.this, "Gagal memuat data penerima.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchActivity.this, "Gagal memuat data.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
                 Log.e("SearchActivity", "onFailure: " + t.getMessage());
-                Toast.makeText(SearchActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SearchActivity.this, "Error Jaringan: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
