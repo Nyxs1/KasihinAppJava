@@ -20,7 +20,7 @@
         android:layout_centerInParent="true"
         android:minWidth="250dp"
         android:minHeight="318dp"
-        android:src="@drawable/logo_kasihin"
+        android:src="@drawable/icon_app2"
         android:contentDescription="@string/app_name" />
 
 </RelativeLayout>

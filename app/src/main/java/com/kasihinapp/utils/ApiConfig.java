@@ -6,6 +6,7 @@ public class ApiConfig {
     // Endpoint pakai gateway `index.php?endpoint=...`
     public static final String LOGIN = BASE_URL + "controllers/auth/login.php";
     public static final String REGISTER = BASE_URL + "controllers/auth/register.php";
+    public static final String LOGOUT = "controllers/auth/logout.php";
     public static final String GET_RECIPIENTS = "controllers/user/get_recipients.php";
 
     public static final String GET_ALL_CAMPAIGNS = BASE_URL + "controllers/campaign/get_all.php";

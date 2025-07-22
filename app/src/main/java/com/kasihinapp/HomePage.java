@@ -2,12 +2,12 @@ package com.kasihinapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout; // <-- Import
 import com.auth0.android.jwt.JWT;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.kasihinapp.model.DonationHistory;
@@ -32,15 +32,11 @@ public class HomePage extends AppCompatActivity {
     private UserApiService apiService;
 
     // Deklarasi View
+    private SwipeRefreshLayout swipeRefreshLayout; // <-- View baru
     private TextView tvUserName, tvUserRole, tvPoinBalance;
-    private ImageView ivToggleBalance; // <-- View baru
     private RecyclerView rvRecentDonations;
-
-    // Variabel untuk data
     private DonationHistoryAdapter donationAdapter;
     private List<DonationHistory> donationList = new ArrayList<>();
-    private User currentUser; // <-- Menyimpan data user
-    private boolean isBalanceVisible = true; // <-- Flag untuk status poin
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,25 +48,22 @@ public class HomePage extends AppCompatActivity {
 
         initViews();
         setupBottomNav();
-        setupListeners(); // <-- Panggil method listener baru
 
-        int userId = getUserIdFromToken();
-        if (userId != -1) {
-            fetchUserProfile(userId);
-            fetchDonationHistory();
-        } else {
-            // Jika token tidak valid, paksa logout
-            sessionManager.clearSession();
-            startActivity(new Intent(this, ActivityStartedScreen.class));
-            finish();
-        }
+        // Setup listener untuk SwipeRefreshLayout
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            // Panggil method untuk refresh data saat ditarik
+            refreshData();
+        });
+
+        // Panggil data untuk pertama kali saat halaman dibuka
+        refreshData();
     }
 
     private void initViews() {
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         tvUserName = findViewById(R.id.tvUserName);
         tvUserRole = findViewById(R.id.tvUserRole);
         tvPoinBalance = findViewById(R.id.tvPoinBalance);
-        ivToggleBalance = findViewById(R.id.ivToggleBalance); // <-- Inisialisasi ImageView mata
 
         rvRecentDonations = findViewById(R.id.rvRecentDonations);
         rvRecentDonations.setLayoutManager(new LinearLayoutManager(this));
@@ -78,15 +71,32 @@ public class HomePage extends AppCompatActivity {
         rvRecentDonations.setAdapter(donationAdapter);
     }
 
+    /**
+     * Method baru untuk membungkus semua proses pengambilan data.
+     */
+    private void refreshData() {
+        int userId = getUserIdFromToken();
+        if (userId != -1) {
+            fetchUserProfile(userId);
+            fetchDonationHistory(userId);
+        } else {
+            // Jika token tidak valid, hentikan refresh dan paksa logout
+            swipeRefreshLayout.setRefreshing(false);
+            sessionManager.clearSession();
+            startActivity(new Intent(this, ActivityStartedScreen.class));
+            finish();
+        }
+    }
+
     private void fetchUserProfile(int userId) {
         apiService.getUserProfile(userId).enqueue(new Callback<ProfileResponse>() {
             @Override
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isStatus()) {
-                    currentUser = response.body().getUser();
-                    tvUserName.setText(currentUser.getNama());
-                    tvUserRole.setText(currentUser.getRole());
-                    updateBalanceView(); // Panggil method baru untuk update tampilan poin
+                    User user = response.body().getUser();
+                    tvUserName.setText(user.getNama());
+                    tvUserRole.setText(user.getRole());
+                    tvPoinBalance.setText("POIN " + user.getPoin());
                 }
             }
             @Override
@@ -96,38 +106,15 @@ public class HomePage extends AppCompatActivity {
         });
     }
 
-    // ... (fetchDonationHistory, getUserIdFromToken, setupBottomNav tetap sama) ...
+    private void fetchDonationHistory(int userId) {
+        // Tampilkan ikon loading
+        swipeRefreshLayout.setRefreshing(true);
 
-    private void setupListeners() {
-        ivToggleBalance.setOnClickListener(v -> {
-            // Balikkan status visibilitas
-            isBalanceVisible = !isBalanceVisible;
-            // Perbarui tampilan
-            updateBalanceView();
-        });
-    }
-
-    /**
-     * Method baru untuk memperbarui tampilan saldo poin
-     */
-    private void updateBalanceView() {
-        if (currentUser == null) return;
-
-        if (isBalanceVisible) {
-            // Jika terlihat, tampilkan jumlah poin asli
-            tvPoinBalance.setText(currentUser.getPoin() + " POINT");
-            ivToggleBalance.setImageResource(R.drawable.ic_visibility);
-        } else {
-            // Jika disembunyikan, tampilkan bintang
-            tvPoinBalance.setText("**** POINT");
-                ivToggleBalance.setImageResource(R.drawable.ic_visibility_off);
-        }
-    }
-
-    private void fetchDonationHistory() {
-        apiService.getDonationHistory().enqueue(new Callback<DonationHistoryResponse>() {
+        apiService.getDonationHistory(userId).enqueue(new Callback<DonationHistoryResponse>() {
             @Override
             public void onResponse(Call<DonationHistoryResponse> call, Response<DonationHistoryResponse> response) {
+                // Sembunyikan ikon loading setelah selesai
+                swipeRefreshLayout.setRefreshing(false);
                 if (response.isSuccessful() && response.body() != null && response.body().isStatus()) {
                     donationList.clear();
                     donationList.addAll(response.body().getHistory());
@@ -136,11 +123,14 @@ public class HomePage extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<DonationHistoryResponse> call, Throwable t) {
+                // Sembunyikan ikon loading jika gagal
+                swipeRefreshLayout.setRefreshing(false);
                 Toast.makeText(HomePage.this, "Gagal memuat riwayat donasi", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    // ... (method getUserIdFromToken dan setupBottomNav tetap sama) ...
     private int getUserIdFromToken() {
         String token = sessionManager.getAuthToken();
         if (token != null) {
@@ -165,7 +155,10 @@ public class HomePage extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), SearchActivity.class));
                 return true;
             }
-            // ... (logika item lain)
+            if (itemId == R.id.navigation_profil) {
+                startActivity(new Intent(getApplicationContext(), ProfileUserActivity.class));
+                return true;
+            }
             return false;
         });
     }
