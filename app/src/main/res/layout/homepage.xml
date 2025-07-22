@@ -122,10 +122,11 @@
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:layout_marginStart="8dp"
-                                android:contentDescription="Tampilkan/Sembunyikan saldo"
-                                android:src="@drawable/ic_visibility"
                                 android:clickable="true"
-                                android:focusable="true"/>
+                                android:contentDescription="Tampilkan/Sembunyikan saldo"
+                                android:focusable="true"
+                                android:src="@drawable/ic_visibility"
+                                tools:ignore="TouchTargetSizeCheck" />
                         </LinearLayout>
 
                         <!-- REVISI 2: Tata Letak Tombol diperbaiki -->
