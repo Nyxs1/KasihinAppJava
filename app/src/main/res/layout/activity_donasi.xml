@@ -1,4 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
@@ -14,11 +15,11 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_margin="16dp"
-            android:src="@drawable/ic_back"
-            android:contentDescription="Back"
             android:clickable="true"
+            android:contentDescription="Back"
             android:focusable="true"
-            />
+            android:src="@drawable/ic_back"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <ImageView
             android:id="@+id/ivDonasiProfile"
@@ -57,17 +58,19 @@
             android:id="@+id/etNama"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Dari"
             android:layout_marginTop="10dp"
-            android:background="#EEEEEE"/>
+            android:background="#EEEEEE"
+            android:hint="Dari"
+            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
             android:layout_marginTop="10dp"
-            android:background="#EEEEEE"/>
+            android:background="#EEEEEE"
+            android:hint="Email"
+            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/etPesan"

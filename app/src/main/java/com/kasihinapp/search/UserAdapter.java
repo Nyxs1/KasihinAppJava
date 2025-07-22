@@ -1,5 +1,3 @@
-// UserAdapter.java
-
 package com.kasihinapp.search;
 
 import android.content.Intent;
@@ -11,8 +9,11 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kasihinapp.R; // <-- Tambahkan import untuk R
-import com.kasihinapp.models.User; // <-- PERBAIKAN: Sesuaikan dengan package User.java
+// --- UBAH IMPORT INI ---
+import com.kasihinapp.model.User; // Ganti dari com.google.firebase...
+// -----------------------
+
+import com.kasihinapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             filteredList.addAll(userList);
         } else {
             for (User user : userList) {
-                // PENYESUAIAN: Menggunakan getNama()
                 if (user.getNama().toLowerCase(Locale.ROOT).contains(keyword.toLowerCase(Locale.ROOT))) {
                     filteredList.add(user);
                 }
@@ -52,19 +52,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     public void onBindViewHolder(UserViewHolder holder, int position) {
         final User user = filteredList.get(position);
 
-        // --- PENYESUAIAN DATA DENGAN MODEL USER ---
-        holder.name.setText(user.getNama()); // Menggunakan getNama()
-        holder.role.setText(user.getRole()); // Menggunakan getRole()
-        holder.lastActive.setText(user.getCreatedAt()); // Menggunakan getCreatedAt() untuk last active
-
-        // Catatan: Model User tidak punya data gambar. Baris ini bisa diaktifkan jika model diperbarui.
-        // holder.image.setImageResource(R.mipmap.ic_launcher);
+        holder.name.setText(user.getNama());
+        holder.role.setText(user.getRole());
+        holder.lastActive.setText(user.getCreatedAt());
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), ProfileActivity.class);
-            intent.putExtra("name", user.getNama()); // Menggunakan getNama()
-            intent.putExtra("role", user.getRole()); // Menggunakan getRole()
-            // intent.putExtra("image", R.mipmap.ic_launcher); // Sesuaikan jika perlu
+            intent.putExtra("name", user.getNama());
+
             v.getContext().startActivity(intent);
         });
     }

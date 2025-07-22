@@ -5,7 +5,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    private static final String BASE_URL = "http://192.168.0.115/pmobile/";
+
+    private static final String BASE_URL = "http://172.16.39.170/KasihinApp/KasihinAppPhp/";
     private static Retrofit retrofit;
 
     public static Retrofit getClient() {
