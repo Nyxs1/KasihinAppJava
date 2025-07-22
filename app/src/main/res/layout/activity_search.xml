@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/search_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -14,7 +13,7 @@
         android:layout_margin="16dp"
         android:background="@android:drawable/edit_text"
         android:drawableStart="@android:drawable/ic_menu_search"
-        android:hint="Mau nyari siapa?"
+        android:hint="Cari nama influencer..."
         android:padding="10dp" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -22,5 +21,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/etSearch"
-        android:paddingHorizontal="10dp" />
-</RelativeLayout>
+        android:paddingHorizontal="10dp"
+        android:visibility="gone" /> <ProgressBar
+    android:id="@+id/progressBar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Tidak ada pengguna ditemukan."
+        android:visibility="gone" /> </RelativeLayout>

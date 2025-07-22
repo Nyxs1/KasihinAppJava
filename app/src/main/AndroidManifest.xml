@@ -40,6 +40,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".search.DonasiActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".search.SearchActivity"
             android:exported="false" />
         <activity

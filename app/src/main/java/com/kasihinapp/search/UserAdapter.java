@@ -54,12 +54,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
         holder.name.setText(user.getNama());
         holder.role.setText(user.getRole());
-        holder.lastActive.setText(user.getCreatedAt());
+
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), ProfileActivity.class);
-            intent.putExtra("name", user.getNama());
-
+            // --- PERUBAHAN: Kirim ID pengguna ---
+            intent.putExtra("user_id", user.getId());
             v.getContext().startActivity(intent);
         });
     }
@@ -70,14 +70,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     }
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
-        TextView name, role, lastActive;
+        TextView name, role;
         ImageView image;
 
         public UserViewHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tvName);
             role = itemView.findViewById(R.id.tvRole);
-            lastActive = itemView.findViewById(R.id.tvLastActive);
             image = itemView.findViewById(R.id.imageView);
         }
     }

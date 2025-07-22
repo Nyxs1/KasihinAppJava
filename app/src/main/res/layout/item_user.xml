@@ -43,12 +43,5 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvLastActive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="15.04 AM"
-            android:textSize="12sp"
-            android:textColor="#888888" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

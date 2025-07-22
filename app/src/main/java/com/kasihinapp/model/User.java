@@ -1,20 +1,39 @@
 package com.kasihinapp.model;
 
+import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class User implements Serializable {
 
+    @SerializedName("id")
     private int id;
-    private String nama;
-    private String email;
-    private String password;
-    private String role; // enum
-    private int poin; // default 1000
-    private String createdAt; // timestamp or date
 
+    @SerializedName("nama")
+    private String nama;
+
+    @SerializedName("email")
+    private String email;
+
+    @SerializedName("password")
+    private String password;
+
+    @SerializedName("role")
+    private String role;
+
+    @SerializedName("poin")
+    private int poin;
+
+    @SerializedName("created_at")
+    private String createdAt;
+
+    @SerializedName("bio_user")
+    private String bioUser;
+
+    // Constructor kosong, berguna untuk beberapa library
     public User() {}
 
-    public User(int id, String nama, String email, String password, String role, int poin, String createdAt) {
+    // Constructor lengkap yang sudah diperbarui
+    public User(int id, String nama, String email, String password, String role, int poin, String createdAt, String bioUser) {
         this.id = id;
         this.nama = nama;
         this.email = email;
@@ -22,8 +41,10 @@ public class User implements Serializable {
         this.role = role;
         this.poin = poin;
         this.createdAt = createdAt;
+        this.bioUser = bioUser; // Ditambahkan
     }
 
+    // Getters and Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
@@ -45,6 +66,10 @@ public class User implements Serializable {
     public String getCreatedAt() { return createdAt; }
     public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
 
+    // Getter dan Setter untuk bioUser
+    public String getBioUser() { return bioUser; }
+    public void setBioUser(String bioUser) { this.bioUser = bioUser; }
+
     @Override
     public String toString() {
         return "User{" +
@@ -55,6 +80,7 @@ public class User implements Serializable {
                 ", role='" + role + '\'' +
                 ", poin=" + poin +
                 ", createdAt='" + createdAt + '\'' +
+                ", bioUser='" + bioUser + '\'' + // Ditambahkan
                 '}';
     }
 }
