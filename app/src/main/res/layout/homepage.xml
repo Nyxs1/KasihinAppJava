@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Header Section -->
+
             <!-- Header Section -->
             <LinearLayout
                 android:id="@+id/header_layout"
