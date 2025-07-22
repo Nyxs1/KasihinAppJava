@@ -1,32 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:gravity="center"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
-    android:background="@color/white">
+    android:background="@android:color/white"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp">
 
-    <ImageView
+    <androidx.cardview.widget.CardView
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:src="@drawable/ic_success_check"
-        android:contentDescription="Success"/>
+        app:cardBackgroundColor="#4CAF50"
+        app:cardCornerRadius="60dp"
+        app:cardElevation="8dp">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_success_check"
+            app:tint="@android:color/white" />
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
-        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/plus_jakarta_sans_bold"
         android:text="Selesai"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:textColor="#212121"
+        android:textSize="24sp" />
 
     <TextView
-        android:layout_marginTop="12dp"
-        android:textAlignment="center"
-        android:text="Siap Berbagi, Siap Mendukung Akunmu sudah jadi.\nMulai Sekarang Semua dukungan berada di ujung jari kamu!"
-        android:textSize="14sp"
-        android:textColor="#444"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/plus_jakarta_sans_regular"
+        android:gravity="center"
+        android:text="Siap Berbagi. Siap Mendukung Akunmu sudah jadi. Mulai Sekarang Semua dukungan berada diujung jari kamu!"
+        android:textColor="#616161"
+        android:textSize="16sp" />
+
 </LinearLayout>

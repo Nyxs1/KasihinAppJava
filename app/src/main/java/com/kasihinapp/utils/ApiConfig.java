@@ -1,7 +1,7 @@
 package com.kasihinapp.utils;
 
 public class ApiConfig {
-    private static final String BASE_URL = "http://172.16.39.170/KasihinApp/KasihinAppPhp/";
+    private static final String BASE_URL = "http://172.16.0.21/KasihinApp/KasihinAppPhp/";
 
     // Endpoint pakai gateway `index.php?endpoint=...`
     public static final String LOGIN = BASE_URL + "controllers/auth/login.php";

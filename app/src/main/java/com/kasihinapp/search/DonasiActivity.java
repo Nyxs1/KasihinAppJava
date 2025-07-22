@@ -14,7 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.auth0.android.jwt.JWT;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputEditText;
-import com.kasihinapp.search.Berhasil;
+import com.kasihinapp.search.activity_berhasil;
 import com.kasihinapp.R;
 import com.kasihinapp.model.DonationResponse;
 import com.kasihinapp.utils.ApiClient;
@@ -28,7 +28,7 @@ import retrofit2.Response;
 
 public class DonasiActivity extends AppCompatActivity {
 
-    // Deklarasi View disesuaikan dengan XML
+    // ... (deklarasi variabel tetap sama)
     private Toolbar toolbar;
     private CircleImageView ivPenerimaProfile;
     private TextView tvPenerimaDisplayName;
@@ -39,10 +39,11 @@ public class DonasiActivity extends AppCompatActivity {
 
     private int idUserPenerima;
     private String namaUserPenerima;
-    private int idUserPengirim; // ID pengguna yang sedang login
+    private int idUserPengirim;
 
     private UserApiService apiService;
     private SessionManager sessionManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,6 @@ public class DonasiActivity extends AppCompatActivity {
         sessionManager = new SessionManager(this);
 
         idUserPengirim = getUserIdFromToken();
-
         idUserPenerima = getIntent().getIntExtra("user_id", -1);
         namaUserPenerima = getIntent().getStringExtra("user_name");
 
@@ -98,22 +98,32 @@ public class DonasiActivity extends AppCompatActivity {
         String pesan = etPesanPengirim.getText().toString();
 
         Toast.makeText(this, "Mengirim " + jumlahPoin + " Poin...", Toast.LENGTH_SHORT).show();
-        btnKirimPoin.setEnabled(false); // Nonaktifkan tombol selama proses
+        btnKirimPoin.setEnabled(false);
 
         Call<DonationResponse> call = apiService.sendUserDonation(idUserPengirim, idUserPenerima, jumlahPoin, pesan);
         call.enqueue(new Callback<DonationResponse>() {
             @Override
             public void onResponse(Call<DonationResponse> call, Response<DonationResponse> response) {
                 btnKirimPoin.setEnabled(true);
+
+                // --- BAGIAN INI DIPERBAIKI ---
                 if (response.isSuccessful() && response.body() != null) {
-                    Toast.makeText(DonasiActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    if (response.body().isStatus()) {
-                        Intent intent = new Intent(DonasiActivity.this, Berhasil.class);
+                    DonationResponse donationResponse = response.body();
+
+                    // Tampilkan pesan dari server, apapun itu (sukses atau gagal)
+                    Toast.makeText(DonasiActivity.this, donationResponse.getMessage(), Toast.LENGTH_LONG).show();
+
+                    // Jika status dari server adalah true, baru pindah halaman
+                    if (donationResponse.isStatus()) {
+                        Intent intent = new Intent(DonasiActivity.this, activity_berhasil.class);
                         startActivity(intent);
                         finish();
                     }
+                    // Jika status false (seperti poin tidak cukup), tidak akan pindah halaman
+                    Toast.makeText(DonasiActivity.this, donationResponse.getMessage(), Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(DonasiActivity.this, "Gagal mengirim donasi. Coba lagi.", Toast.LENGTH_SHORT).show();
+                    // Ini untuk error HTTP seperti 404, 500, dll.
+                    Toast.makeText(DonasiActivity.this, "Gagal mengirim donasi. Terjadi kesalahan server.", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -125,6 +135,7 @@ public class DonasiActivity extends AppCompatActivity {
         });
     }
 
+    // ... (method validateInputs dan getUserIdFromToken tetap sama) ...
     private boolean validateInputs() {
         String poinStr = etJumlahPoin.getText().toString().trim();
         if (TextUtils.isEmpty(poinStr) || Integer.parseInt(poinStr) < 20) {
